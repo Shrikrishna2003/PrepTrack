@@ -46,7 +46,34 @@ PrepTrack/
     └── js/
         ├── charts.js         # dashboard charts + heatmap
         └── company_chart.js
+      
 ```
+## 📸 Screenshots
+
+### Dashboard
+![Dashboard](Screenshots/dashboard.png)
+
+### Login
+![Login](Screenshots/login-page.png)
+
+### Practice
+![Practice](Screenshots/practice.png)
+
+### All Problems
+![All Problems](Screenshots/all-problems.png)
+
+### Company Analytics
+![Company Analytics](Screenshots/company-analytics.png)
+
+### Notes
+![Notes](Screenshots/notes.png)
+
+### Profile
+![Profile](Screenshots/profile-page.png)
+
+### Log a Problem
+![Log a Problem](Screenshots/log-problem.png)
+
 
 ## Setup
 
