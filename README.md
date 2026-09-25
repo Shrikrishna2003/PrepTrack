@@ -50,30 +50,21 @@ PrepTrack/
 ```
 ## 📸 Screenshots
 
-### Dashboard
-![Dashboard](Screenshots/Dashboard.png)
+| Dashboard | Practice |
+|-----------|----------|
+| ![Dashboard](Screenshots/Dashboard.png) | ![Practice](Screenshots/practice.png) |
 
-### Login
-![Login](Screenshots/login-page.png)
+| Company Analytics | All Problems |
+|-------------------|--------------|
+| ![Company](Screenshots/company-analytics.png) | ![Problems](Screenshots/all-problems.png) |
 
-### Practice
-![Practice](Screenshots/practice.png)
+| Notes | Profile |
+|--------|---------|
+| ![Notes](Screenshots/notes.png) | ![Profile](Screenshots/profile-page.png) |
 
-### All Problems
-![All Problems](Screenshots/all-problems.png)
-
-### Company Analytics
-![Company Analytics](Screenshots/company-analytics.png)
-
-### Notes
-![Notes](Screenshots/notes.png)
-
-### Profile
-![Profile](Screenshots/profile.png)
-
-### Log a Problem
-![Log a Problem](Screenshots/Log-Problem.png)
-
+| Login | Log a Problem |
+|--------|---------------|
+| ![Login](Screenshots/login-page.png) | ![Log Problem](Screenshots/Log-problem.png) |
 
 ## Setup
 
