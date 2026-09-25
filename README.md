@@ -51,7 +51,7 @@ PrepTrack/
 ## 📸 Screenshots
 
 ### Dashboard
-![Dashboard](Screenshots/dashboard.png)
+![Dashboard](Screenshots/Dashboard.png)
 
 ### Login
 ![Login](Screenshots/login-page.png)
@@ -69,10 +69,10 @@ PrepTrack/
 ![Notes](Screenshots/notes.png)
 
 ### Profile
-![Profile](Screenshots/profile-page.png)
+![Profile](Screenshots/profile.png)
 
 ### Log a Problem
-![Log a Problem](Screenshots/log-problem.png)
+![Log a Problem](Screenshots/Log-Problem.png)
 
 
 ## Setup
