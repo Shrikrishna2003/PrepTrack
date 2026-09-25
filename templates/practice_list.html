@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Practice — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Write, run, get judged</div>
+    <h1>Practice</h1>
+  </div>
+</div>
+
+{% if problems %}
+<div class="practice-grid">
+  {% for p in problems %}
+  <a class="practice-card {% if p.best_status == 'Accepted' %}solved{% elif p.best_status %}attempted{% endif %}"
+     href="{{ url_for('practice_solve', slug=p.slug) }}" style="display:block;">
+    <h4>{{ p.title }}</h4>
+    <div class="meta-row">
+      <span class="tag tag-{{ p.difficulty|lower }}">{{ p.difficulty }}</span>
+      {% if p.company_name %}<span class="topic-chip">{{ p.company_name }}</span>{% endif %}
+      {% if p.topic %}<span class="topic-chip">· {{ p.topic }}</span>{% endif %}
+    </div>
+    {% if p.best_status == 'Accepted' %}
+      <span class="status-badge accepted">✓ Accepted</span>
+    {% elif p.best_status %}
+      <span class="status-badge attempted">Attempted</span>
+    {% else %}
+      <span class="status-badge">Not started</span>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  No practice problems yet. Run <code>practice_schema.sql</code> against your database to load the starter set.
+</div>
+{% endif %}
+{% endblock %}

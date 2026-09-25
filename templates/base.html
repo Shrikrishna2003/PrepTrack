@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PrepTrack{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script>
+    (function() {
+      var saved = localStorage.getItem('preptrack-theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="wordmark">PrepTrack</div>
+
+      <div class="nav-group">
+        <div class="nav-label">Overview</div>
+        <a class="nav-item {% if request.endpoint=='dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+          <span class="nav-dot"></span> Dashboard
+        </a>
+        <a class="nav-item {% if request.endpoint=='add_problem' %}active{% endif %}" href="{{ url_for('add_problem') }}">
+          <span class="nav-dot"></span> Log a problem
+        </a>
+        <a class="nav-item {% if request.endpoint in ['practice_list','practice_solve'] %}active{% endif %}" href="{{ url_for('practice_list') }}">
+          <span class="nav-dot"></span> Practice
+        </a>
+        <a class="nav-item {% if request.endpoint=='notes' %}active{% endif %}" href="{{ url_for('notes') }}">
+          <span class="nav-dot"></span> Notes
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Companies</div>
+        {% for c in ['TCS', 'Infosys', 'Atidan'] %}
+        <a class="nav-item {% if request.view_args and request.view_args.get('company_name')==c %}active{% endif %}"
+           href="{{ url_for('company_view', company_name=c) }}">
+          <span class="nav-dot"></span> {{ c }}
+        </a>
+        {% endfor %}
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">You</div>
+        <a class="nav-item {% if request.endpoint=='profile' %}active{% endif %}" href="{{ url_for('profile') }}">
+          <span class="nav-dot"></span> Profile
+        </a>
+        <a class="nav-item {% if request.endpoint=='problems_list' %}active{% endif %}" href="{{ url_for('problems_list') }}">
+          <span class="nav-dot"></span> All problems
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="name">{{ session.get('user_name', '') }}</div>
+        <a href="{{ url_for('logout') }}" style="color: var(--text-dim); font-size: 12px;">Sign out</a>
+        <button class="theme-toggle" id="themeToggle" type="button">🌓 Toggle theme</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('themeToggle')?.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme') || 'dark';
+      var next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('preptrack-theme', next);
+    });
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

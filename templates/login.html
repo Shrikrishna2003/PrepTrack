@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in — PrepTrack</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script>
+    (function() {
+      var saved = localStorage.getItem('preptrack-theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-side">
+      <div class="wordmark">PrepTrack</div>
+      <div class="pitch">
+        <h1>Log every problem. Watch the streak grow.</h1>
+        <p>Track what you've solved for TCS, Infosys and Atidan drives, and see exactly where the gaps are before placement season does.</p>
+        <div class="mini-grid" style="margin-top: 28px;" id="miniGrid"></div>
+      </div>
+      <div style="color: var(--text-faint); font-size: 12px;">Python · Flask · MySQL</div>
+    </div>
+
+    <div class="auth-form-wrap">
+      <div class="auth-form">
+        <div class="eyebrow">Welcome back</div>
+        <h2>Sign in</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autofocus>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Sign in</button>
+        </form>
+
+        <div class="auth-switch">
+          New here? <a href="{{ url_for('register') }}">Create an account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const grid = document.getElementById('miniGrid');
+    if (grid) {
+      for (let i = 0; i < 130; i++) {
+        const s = document.createElement('span');
+        const r = Math.random();
+        if (r > 0.85) s.className = 'l3';
+        else if (r > 0.7) s.className = 'l2';
+        else if (r > 0.5) s.className = 'l1';
+        grid.appendChild(s);
+      }
+    }
+  </script>
+</body>
+</html>

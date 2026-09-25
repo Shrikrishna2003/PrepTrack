@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Log a problem — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">New entry</div>
+    <h1>Log a problem</h1>
+  </div>
+</div>
+
+<div class="form-panel">
+  <form method="POST">
+    <div class="field">
+      <label for="title">Problem title</label>
+      <input type="text" id="title" name="title" value="{{ prefill.title if prefill else '' }}" placeholder="e.g. Longest Substring Without Repeating Characters" required>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="company_id">Company</label>
+        <select id="company_id" name="company_id" required>
+          {% for c in companies %}
+          <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label for="topic">Topic</label>
+        <input type="text" id="topic" name="topic" value="{{ prefill.topic if prefill else '' }}" placeholder="Arrays, DP, Graphs…">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" name="difficulty">
+          {% set d = prefill.difficulty if prefill else 'Medium' %}
+          <option value="Easy" {% if d=='Easy' %}selected{% endif %}>Easy</option>
+          <option value="Medium" {% if d=='Medium' %}selected{% endif %}>Medium</option>
+          <option value="Hard" {% if d=='Hard' %}selected{% endif %}>Hard</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="Solved" selected>Solved</option>
+          <option value="Attempted">Attempted</option>
+          <option value="Revisit">Needs revisit</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="platform">Platform</label>
+        <input type="text" id="platform" name="platform" placeholder="LeetCode, HackerRank…">
+      </div>
+      <div class="field">
+        <label for="time_taken_min">Time taken (min)</label>
+        <input type="number" id="time_taken_min" name="time_taken_min" min="0">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="problem_link">Problem link</label>
+      <input type="url" id="problem_link" name="problem_link" placeholder="https://…">
+    </div>
+
+    <div class="field">
+      <label for="solved_date">Date</label>
+      <input type="date" id="solved_date" name="solved_date" value="{{ today }}" required>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit" style="width:auto;">Save entry</button>
+      <a class="btn btn-ghost" href="{{ url_for('dashboard') }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

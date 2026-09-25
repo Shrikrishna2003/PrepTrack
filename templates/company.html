@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ company.name }} — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Company-wise prep</div>
+    <h1>{{ company.name }}</h1>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('add_problem') }}" style="width:auto;">+ Log a problem</a>
+</div>
+
+<div class="company-pills">
+  {% for c in companies %}
+  <a class="pill {% if c.name == company.name %}active{% endif %}" href="{{ url_for('company_view', company_name=c.name) }}">
+    {{ c.name }}
+  </a>
+  {% endfor %}
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>{{ company.name }} log</h3>
+      <span class="hint">{{ problems | length }} entries</span>
+    </div>
+    {% if problems %}
+    <table class="log-table">
+      <thead>
+        <tr><th>Problem</th><th>Topic</th><th>Difficulty</th><th>Status</th><th>Date</th><th colspan="2"></th></tr>
+      </thead>
+      <tbody>
+        {% for p in problems %}
+        <tr>
+          <td class="title-cell">
+            {% if p.problem_link %}<a href="{{ p.problem_link }}" target="_blank" style="color: var(--amber);">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}
+          </td>
+          <td>{{ p.topic or '—' }}</td>
+          <td><span class="tag tag-{{ p.difficulty|lower }}">{{ p.difficulty }}</span></td>
+          <td>{{ p.status }}</td>
+          <td class="date-cell">{{ p.solved_date }}</td>
+          <td><a href="{{ url_for('edit_problem', problem_id=p.id) }}" class="hint" style="color: var(--amber);">Edit</a></td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_problem', problem_id=p.id) }}" onsubmit="return confirm('Remove this entry?');">
+              <button class="btn-danger" type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No {{ company.name }} problems logged yet. <a href="{{ url_for('add_problem') }}">Log one</a>.</div>
+    {% endif %}
+  </div>
+
+  <div>
+    <div class="panel" style="margin-bottom: var(--gap);">
+      <div class="panel-head"><h3>Difficulty split</h3></div>
+      <div class="chart-box small"><canvas id="companyDifficultyChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Top topics</h3></div>
+      {% if by_topic %}
+      {% for t in by_topic %}
+      <div class="flex-between" style="padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 13px;">
+        <span style="color: var(--text-dim);">{{ t.topic }}</span>
+        <span class="mono" style="color: var(--text);">{{ t.c }}</span>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="empty-state" style="padding: 16px 0;">No topics yet.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/vendor/chart.umd.js') }}"></script>
+<script>
+  const byDifficulty = {{ by_difficulty | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/company_chart.js') }}"></script>
+{% endblock %}

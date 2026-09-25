@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{{ problem.title }} — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow"><a href="{{ url_for('practice_list') }}" style="color: var(--text-faint);">Practice</a> / {{ problem.topic or 'General' }}</div>
+    <h1>{{ problem.title }}</h1>
+  </div>
+</div>
+
+<div id="solvedBanner"></div>
+
+<div class="solve-layout">
+  <div class="statement-panel">
+    <div class="meta-row" style="margin-bottom: 0;">
+      <span class="tag tag-{{ problem.difficulty|lower }}">{{ problem.difficulty }}</span>
+      {% if problem.company_name %}<span class="topic-chip">{{ problem.company_name }}</span>{% endif %}
+      {% if problem.topic %}<span class="topic-chip">· {{ problem.topic }}</span>{% endif %}
+    </div>
+    <div class="statement-text">{{ problem.statement }}</div>
+
+    {% if samples %}
+    <div style="margin-top: 18px;">
+      <h4 style="font-size: 13px; color: var(--text-dim); margin-bottom: 10px;">Sample cases</h4>
+      {% for s in samples %}
+      <div class="test-case">
+        <div class="tc-label">Input</div>
+        <pre>{{ s.input }}</pre>
+        <div class="tc-label">Expected output</div>
+        <pre>{{ s.expected_output }}</pre>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="judge-note">
+      Code runs as plain Python via <code>input()</code> / <code>print()</code> — read from stdin, write to stdout.
+      Submissions are judged against hidden test cases beyond the samples shown here.
+    </div>
+  </div>
+
+  <div class="editor-panel">
+    <div class="editor-toolbar">
+      <span class="lang">python3</span>
+      <div class="editor-actions">
+        <button class="btn btn-ghost" id="runBtn" type="button">Run</button>
+        <button class="btn btn-primary" id="submitBtn" type="button">Submit</button>
+      </div>
+    </div>
+    <textarea id="codeEditor">{{ starting_code }}</textarea>
+    <div class="output-panel" id="outputPanel">
+      <div style="color: var(--text-faint); font-size: 13px;">Output will appear here after you run or submit.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/codemirror.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/dracula.css') }}">
+<script src="{{ url_for('static', filename='js/vendor/codemirror/codemirror.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/codemirror/python.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/codemirror/matchbrackets.js') }}"></script>
+<script>
+  const PROBLEM_ID = {{ problem.id }};
+  const PROBLEM_TITLE = {{ problem.title | tojson }};
+  const PROBLEM_TOPIC = {{ (problem.topic or '') | tojson }};
+  const PROBLEM_DIFFICULTY = {{ problem.difficulty | tojson }};
+  const ADD_PROBLEM_URL = "{{ url_for('add_problem') }}";
+  const SAMPLE_INPUT = {{ (samples[0].input if samples else '') | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/practice.js') }}"></script>
+{% endblock %}

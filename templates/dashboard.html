@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">{{ session.get('user_name', '') }}'s prep</div>
+    <h1>Dashboard</h1>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('add_problem') }}" style="width:auto;">+ Log a problem</a>
+</div>
+
+<div class="panel" style="margin-bottom: var(--gap); display:flex; justify-content:space-between; align-items:center; gap: 24px; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 220px;">
+    <div class="panel-head" style="margin-bottom: 4px;">
+      <h3>This week's goal</h3>
+      <span class="hint">{{ this_week_count }} / {{ weekly_goal }}</span>
+    </div>
+    <div class="goal-bar-track"><div class="goal-bar-fill" style="width: {{ goal_pct }}%;"></div></div>
+    <div style="font-size: 11px; color: var(--text-faint);">
+      {% if goal_pct >= 100 %}Goal hit — nice work.{% else %}{{ goal_pct }}% of this week's goal.{% endif %}
+      <a href="{{ url_for('profile') }}" style="color: var(--amber);">Change goal</a>
+    </div>
+  </div>
+  {% if days_to_interview is not none %}
+  <div style="text-align: right;">
+    <div class="label" style="font-size:12px; color: var(--text-dim);">Interview in</div>
+    <div class="value mono {% if days_to_interview < 7 %}accent{% endif %}" style="font-size: 26px; font-weight:700;">
+      {% if days_to_interview < 0 %}passed{% else %}{{ days_to_interview }} day{{ 's' if days_to_interview != 1 else '' }}{% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<div class="stat-strip">
+  <div class="stat">
+    <div class="label">Problems solved</div>
+    <div class="value">{{ total_solved }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Current streak</div>
+    <div class="value accent">{{ current_streak }}<span style="font-size:14px; color: var(--text-faint);"> day{{ 's' if current_streak != 1 else '' }}</span></div>
+  </div>
+  <div class="stat">
+    <div class="label">Longest streak</div>
+    <div class="value accent-teal">{{ longest_streak }}<span style="font-size:14px; color: var(--text-faint);"> days</span></div>
+  </div>
+  <div class="stat">
+    <div class="label">Last 30 days</div>
+    <div class="value">{{ last_30 | sum(attribute='c') }}</div>
+  </div>
+</div>
+
+<div class="panel" style="margin-bottom: var(--gap);">
+  <div class="panel-head">
+    <h3>Streak calendar</h3>
+    <span class="hint">last 26 weeks</span>
+  </div>
+  <div class="heatmap-scroll">
+    <div class="heatmap" id="heatmap"></div>
+  </div>
+  <div class="heatmap-legend">
+    <span>Less</span>
+    <span class="cell" style="background: var(--line-soft);"></span>
+    <span class="cell" style="background: var(--amber-dim);"></span>
+    <span class="cell" style="background: #b8822f;"></span>
+    <span class="cell" style="background: var(--amber);"></span>
+    <span>More</span>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Solved — last 30 days</h3>
+    </div>
+    <div class="chart-box"><canvas id="trendChart"></canvas></div>
+  </div>
+  <div class="panel">
+    <div class="panel-head">
+      <h3>By difficulty</h3>
+    </div>
+    <div class="chart-box"><canvas id="difficultyChart"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Recent activity</h3>
+      <a href="{{ url_for('add_problem') }}" class="hint" style="color: var(--amber);">Log one →</a>
+    </div>
+    {% if recent %}
+    <table class="log-table">
+      <thead>
+        <tr><th>Problem</th><th>Company</th><th>Difficulty</th><th>Date</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for p in recent %}
+        <tr>
+          <td class="title-cell">{{ p.title }}</td>
+          <td>{{ p.company_name }}</td>
+          <td><span class="tag tag-{{ p.difficulty|lower }}">{{ p.difficulty }}</span></td>
+          <td class="date-cell">{{ p.solved_date }}</td>
+          <td><a href="{{ url_for('edit_problem', problem_id=p.id) }}" class="hint" style="color: var(--amber);">Edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="margin-top: 12px;">
+      <a href="{{ url_for('problems_list') }}" class="hint" style="color: var(--text-dim);">View all problems →</a>
+    </div>
+    {% else %}
+    <div class="empty-state">No problems logged yet. <a href="{{ url_for('add_problem') }}">Log your first one</a>.</div>
+    {% endif %}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3>By company</h3>
+    </div>
+    <div class="chart-box small"><canvas id="companyChart"></canvas></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/vendor/chart.umd.js') }}"></script>
+<script>
+  const heatmapData = {{ heatmap | tojson }};
+  const last30 = {{ last_30 | tojson }};
+  const byDifficulty = {{ by_difficulty | tojson }};
+  const byCompany = {{ by_company | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

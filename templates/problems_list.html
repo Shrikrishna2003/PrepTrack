@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}All Problems — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">{{ total }} total</div>
+    <h1>All Problems</h1>
+  </div>
+  <a class="btn btn-ghost" href="{{ url_for('export_csv') }}" style="width:auto;">⬇ Export CSV</a>
+</div>
+
+<form method="GET" class="panel" style="margin-bottom: var(--gap);">
+  <div class="form-row" style="grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px;">
+    <div class="field" style="margin-bottom:0;">
+      <label for="q">Search</label>
+      <input type="text" id="q" name="q" value="{{ search }}" placeholder="Search by title…">
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="company">Company</label>
+      <select id="company" name="company">
+        <option value="">All</option>
+        {% for c in companies %}
+        <option value="{{ c.name }}" {% if company_filter==c.name %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="difficulty">Difficulty</label>
+      <select id="difficulty" name="difficulty">
+        <option value="">All</option>
+        <option value="Easy" {% if difficulty_filter=='Easy' %}selected{% endif %}>Easy</option>
+        <option value="Medium" {% if difficulty_filter=='Medium' %}selected{% endif %}>Medium</option>
+        <option value="Hard" {% if difficulty_filter=='Hard' %}selected{% endif %}>Hard</option>
+      </select>
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="topic">Topic</label>
+      <select id="topic" name="topic">
+        <option value="">All</option>
+        {% for t in topics %}
+        <option value="{{ t.topic }}" {% if topic_filter==t.topic %}selected{% endif %}>{{ t.topic }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="form-actions" style="margin-top: 14px;">
+    <button class="btn btn-primary" type="submit" style="width:auto;">Apply</button>
+    <a class="btn btn-ghost" href="{{ url_for('problems_list') }}">Clear</a>
+  </div>
+</form>
+
+<div class="panel">
+  {% if problems %}
+  <table class="log-table">
+    <thead>
+      <tr>
+        {% macro sort_link(key, label) %}
+          {% set new_dir = 'asc' if sort_key==key and direction=='desc' else 'desc' %}
+          <a href="{{ url_for('problems_list', q=search, company=company_filter, difficulty=difficulty_filter, topic=topic_filter, sort=key, dir=new_dir) }}"
+             style="color: {{ 'var(--amber)' if sort_key==key else 'var(--text-faint)' }};">
+            {{ label }}{% if sort_key==key %} {{ '↓' if direction=='desc' else '↑' }}{% endif %}
+          </a>
+        {% endmacro %}
+        <th>{{ sort_link('title', 'Problem') }}</th>
+        <th>{{ sort_link('company', 'Company') }}</th>
+        <th>Topic</th>
+        <th>{{ sort_link('difficulty', 'Difficulty') }}</th>
+        <th>{{ sort_link('date', 'Date') }}</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in problems %}
+      <tr>
+        <td class="title-cell">
+          {% if p.problem_link %}<a href="{{ p.problem_link }}" target="_blank" style="color: var(--amber);">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}
+        </td>
+        <td>{{ p.company_name }}</td>
+        <td>{{ p.topic or '—' }}</td>
+        <td><span class="tag tag-{{ p.difficulty|lower }}">{{ p.difficulty }}</span></td>
+        <td class="date-cell">{{ p.solved_date }}</td>
+        <td><a href="{{ url_for('edit_problem', problem_id=p.id) }}" class="hint" style="color: var(--amber);">Edit</a></td>
+        <td>
+          <form method="POST" action="{{ url_for('delete_problem', problem_id=p.id) }}" onsubmit="return confirm('Remove this entry?');">
+            <button class="btn-danger" type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if total_pages > 1 %}
+  <div class="pagination">
+    {% for p_num in range(1, total_pages + 1) %}
+    <a class="page-link {% if p_num==page %}active{% endif %}"
+       href="{{ url_for('problems_list', q=search, company=company_filter, difficulty=difficulty_filter, topic=topic_filter, sort=sort_key, dir=direction, page=p_num) }}">{{ p_num }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state">No problems match these filters.</div>
+  {% endif %}
+</div>
+{% endblock %}

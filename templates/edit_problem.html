@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Edit — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Edit entry</div>
+    <h1>{{ problem.title }}</h1>
+  </div>
+</div>
+
+<div class="form-panel">
+  <form method="POST">
+    <div class="field">
+      <label for="title">Problem title</label>
+      <input type="text" id="title" name="title" value="{{ problem.title }}" required>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="company_id">Company</label>
+        <select id="company_id" name="company_id" required>
+          {% for c in companies %}
+          <option value="{{ c.id }}" {% if c.id == problem.company_id %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label for="topic">Topic</label>
+        <input type="text" id="topic" name="topic" value="{{ problem.topic or '' }}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" name="difficulty">
+          <option value="Easy" {% if problem.difficulty=='Easy' %}selected{% endif %}>Easy</option>
+          <option value="Medium" {% if problem.difficulty=='Medium' %}selected{% endif %}>Medium</option>
+          <option value="Hard" {% if problem.difficulty=='Hard' %}selected{% endif %}>Hard</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="Solved" {% if problem.status=='Solved' %}selected{% endif %}>Solved</option>
+          <option value="Attempted" {% if problem.status=='Attempted' %}selected{% endif %}>Attempted</option>
+          <option value="Revisit" {% if problem.status=='Revisit' %}selected{% endif %}>Needs revisit</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="platform">Platform</label>
+        <input type="text" id="platform" name="platform" value="{{ problem.platform or '' }}">
+      </div>
+      <div class="field">
+        <label for="time_taken_min">Time taken (min)</label>
+        <input type="number" id="time_taken_min" name="time_taken_min" min="0" value="{{ problem.time_taken_min or '' }}">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="problem_link">Problem link</label>
+      <input type="url" id="problem_link" name="problem_link" value="{{ problem.problem_link or '' }}">
+    </div>
+
+    <div class="field">
+      <label for="solved_date">Date</label>
+      <input type="date" id="solved_date" name="solved_date" value="{{ solved_date }}" required>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit" style="width:auto;">Save changes</button>
+      <a class="btn btn-ghost" href="{{ url_for('dashboard') }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

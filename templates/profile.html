@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Profile — PrepTrack{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="eyebrow">Your account</div>
+    <h1>Profile</h1>
+  </div>
+</div>
+
+<div class="profile-header">
+  <div class="profile-avatar">{{ user.name[0]|upper }}</div>
+  <div>
+    <h3 style="margin-bottom: 2px;">{{ user.name }}</h3>
+    <div style="color: var(--text-dim); font-size: 13px;">{{ user.email }}</div>
+  </div>
+</div>
+
+<div class="stat-strip">
+  <div class="stat">
+    <div class="label">Problems solved</div>
+    <div class="value">{{ total_solved }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Current streak</div>
+    <div class="value accent">{{ current_streak }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Longest streak</div>
+    <div class="value accent-teal">{{ longest_streak }}</div>
+  </div>
+  <div class="stat">
+    <div class="label">Interview in</div>
+    <div class="value {% if days_to_interview is not none and days_to_interview < 7 %}accent{% endif %}">
+      {% if days_to_interview is none %}—{% elif days_to_interview < 0 %}passed{% else %}{{ days_to_interview }}d{% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="panel" style="max-width: 480px;">
+  <div class="panel-head"><h3>Settings</h3></div>
+  <form method="POST">
+    <div class="field">
+      <label for="weekly_goal">Weekly problem goal</label>
+      <input type="number" id="weekly_goal" name="weekly_goal" min="1" value="{{ user.weekly_goal }}">
+    </div>
+    <div class="field">
+      <label for="interview_date">Interview date (optional)</label>
+      <input type="date" id="interview_date" name="interview_date" value="{{ user.interview_date.isoformat() if user.interview_date else '' }}">
+    </div>
+    <button class="btn btn-primary" type="submit" style="width:auto;">Save settings</button>
+  </form>
+</div>
+{% endblock %}
