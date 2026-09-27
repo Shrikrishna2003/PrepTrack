@@ -1,10 +1,8 @@
--- PrepTrack — Priority 1/2/3 feature additions
--- Run against your existing database:
---   mysql -u root -p preptrack < feature_schema.sql
+-- PrepTrack Feature Additions
+-- Run on Railway MySQL
 
-USE preptrack;
+USE railway;
 
--- Weekly goal + interview countdown live on the user record
 ALTER TABLE users
-    ADD COLUMN IF NOT EXISTS weekly_goal INT NOT NULL DEFAULT 20,
-    ADD COLUMN IF NOT EXISTS interview_date DATE NULL;
+    ADD COLUMN weekly_goal INT NOT NULL DEFAULT 20,
+    ADD COLUMN daily_goal INT NOT NULL DEFAULT 3;

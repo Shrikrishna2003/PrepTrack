@@ -811,6 +811,11 @@ def api_practice_submit(problem_id):
     verdict["problem_difficulty"] = problem["difficulty"]
     return jsonify(verdict)
 
+import os
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8080)),
+        debug=False
+    )
