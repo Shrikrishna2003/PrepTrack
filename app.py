@@ -1,3 +1,6 @@
+from pymysql import connections
+from pymysql import connections
+from pymysql import connections
 import datetime
 import logging
 from logging.handlers import RotatingFileHandler
@@ -811,7 +814,9 @@ def api_practice_submit(problem_id):
     verdict["problem_difficulty"] = problem["difficulty"]
     return jsonify(verdict)
 
-import os
+@app.route("/health")
+def health():
+    return "OK", 200
 
 if __name__ == "__main__":
     app.run(
