@@ -19,6 +19,9 @@ from config import Config
 from judge import run_code, judge_submission
 
 app = Flask(__name__)
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
 app.config.from_object(Config)
 
 # ---------------------------------------------------------------------------
