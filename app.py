@@ -2,6 +2,9 @@ from pymysql import connections
 from pymysql import connections
 from pymysql import connections
 from pymysql import connections
+from pymysql import connections
+from pymysql import connections
+from pymysql import connections
 import datetime
 import logging
 from logging.handlers import RotatingFileHandler
@@ -820,8 +823,4 @@ def health():
     return "OK", 200
 
 if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 8080)),
-        debug=False
-    )
+    app.run(...)
