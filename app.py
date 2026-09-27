@@ -13,7 +13,9 @@ from functools import wraps
 
 import pymysql
 import pymysql.cursors
+# pyrefly: ignore [missing-import]
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+# pyrefly: ignore [missing-import]
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from config import Config
@@ -557,6 +559,7 @@ def export_csv():
 
     app.logger.info("CSV export by user %s: %s rows", uid, len(problems))
 
+    # pyrefly: ignore [missing-import]
     from flask import Response
     return Response(
         buf.getvalue(),
