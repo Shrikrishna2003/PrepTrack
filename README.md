@@ -1,8 +1,7 @@
-
 # 🚀 PrepTrack
 
 <p align="center">
-  <a href="https://preptrack.up.railway.app">
+  <a href="https://preptrack-shrikrishna.up.railway.app">
     <img src="https://img.shields.io/badge/🚀_Live_Demo-00C853?style=for-the-badge&logo=railway&logoColor=white"/>
   </a>
 
@@ -16,7 +15,7 @@
 
 <p align="center">
   <b>Full-Stack Coding Interview Preparation Platform</b><br>
-  Track coding progress, maintain streaks, practice interview problems, and analyze preparation through an interactive dashboard.
+  Track coding progress, maintain streaks, practice interview problems, and analyze preparation through an interactive analytics dashboard.
 </p>
 
 PrepTrack is a full-stack coding interview preparation platform built with **Flask** and **MySQL** that helps students organize coding practice, monitor progress, prepare company-wise interview questions, and visualize performance through an interactive analytics dashboard.
@@ -96,7 +95,10 @@ PrepTrack/
 │   ├── dashboard.html
 │   ├── company.html
 │   ├── add_problem.html
-│   └── notes.html
+│   ├── notes.html
+│   ├── profile.html
+│   ├── practice_list.html
+│   └── practice_solve.html
 └── static/
     ├── css/style.css
     └── js/
@@ -128,7 +130,7 @@ PrepTrack/
 
 ## 🌐 Live Demo
 
-**🚀 Website:** `https://preptrack.up.railway.app`
+**🚀 Website:** https://preptrack-shrikrishna.up.railway.app
 
 ### Demo Access
 
@@ -253,4 +255,4 @@ The current implementation is designed for personal practice and is **not a prod
 **Shrikrishna Mokhashi**
 
 - GitHub: https://github.com/Shrikrishna2003
-- Live Demo: https://preptrack.up.railway.app
+- Live Demo: https://preptrack-shrikrishna.up.railway.app
