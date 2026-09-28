@@ -17,26 +17,32 @@
   <b>Full-Stack Coding Interview Preparation Platform</b><br>
   Track coding progress, build streaks, practice interview problems, and analyze preparation with an interactive dashboard.
 </p>
+
 PrepTrack is a full-stack coding interview preparation platform built with Flask and MySQL that helps students track coding progress, maintain streaks, practice interview problems, and visualize preparation through an interactive analytics dashboard.
 
-## Features
+---
 
-- **Auth** — register / login / logout with hashed passwords (Werkzeug)
-- **Problem log** — add, edit, delete: title, company, topic, difficulty, platform, link, status, date, time taken
-- **Search, filter, sort, paginate** — full problem log with search-by-title and filters for company/difficulty/topic
-- **Company-wise view** — filter your log per company with a difficulty breakdown and top topics
-- **Practice + judge** — write Python in an in-browser editor, run it, and submit for automatic grading against test cases (see Practice section below)
-- **Progress charts** — 30-day trend, difficulty split, company split (Chart.js, bundled locally)
-- **Daily streak** — current streak, longest streak, and a GitHub-style contribution heatmap
-- **Weekly goal** — set a weekly target, dashboard shows a live progress bar
-- **Interview countdown** — set a target interview date, see days remaining on the dashboard and profile
-- **Profile page** — name, email, totals, streaks, settings
-- **CSV export** — download your full problem log as a spreadsheet-ready CSV
-- **Dark / light toggle** — persisted per-browser via localStorage
-- **Notes** — freeform notes, optionally linked to a specific problem, with inline editing
-- **Logging** — every action (register, login, add/edit/delete, submissions) logs to console + `preptrack.log`
+## ✨ Features
 
-## Tech stack
+- **Auth** — register, login, and logout with hashed passwords (Werkzeug)
+- **Problem Log** — add, edit, and delete coding problems with company, topic, difficulty, platform, link, status, date, and time taken
+- **Search, Filter & Sort** — quickly find problems with search-by-title, company, difficulty, and topic filters
+- **Company Analytics** — view company-wise preparation with difficulty breakdowns and top topics
+- **Practice & Code Judge** — solve Python problems in an in-browser editor and receive automatic grading against test cases
+- **Progress Dashboard** — visualize a 30-day trend, difficulty distribution, and company-wise progress using Chart.js
+- **Daily Streak** — maintain current and longest streaks with a GitHub-style contribution heatmap
+- **Weekly Goals** — set weekly targets and track progress with a live dashboard progress bar
+- **Interview Countdown** — set a target interview date and see remaining days on the dashboard and profile
+- **Profile Management** — manage personal information, goals, and interview settings
+- **Notes** — create and edit personal notes, optionally linked to specific problems
+- **CSV Export** — export the complete problem log for further analysis
+- **Dark/Light Mode** — theme preference persists using localStorage
+- **Cloud Deployment** — deployed on **Railway** with automatic **GitHub CI/CD** deployments
+- **Logging** — all user actions (register, login, add/edit/delete, submissions) are logged to the console and `preptrack.log`
+
+---
+
+## 🛠 Tech Stack
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=python,flask,mysql,html,css,js,git,github,vscode"/>
@@ -47,6 +53,8 @@ PrepTrack is a full-stack coding interview preparation platform built with Flask
   <img src="https://img.shields.io/badge/Chart.js-Analytics-FF6384?style=flat-square"/>
   <img src="https://img.shields.io/badge/Railway-Deployed-purple?style=flat-square"/>
 </p>
+
+---
 
 ## 🏗 Architecture
 
@@ -65,29 +73,38 @@ Flask (Gunicorn)
    ▼
 Railway MySQL
 ```
-## Project structure
 
-```
+---
+
+## 📂 Project Structure
+
+```text
 PrepTrack/
-├── app.py                 # routes, auth, streak logic, JSON API
-├── config.py               # env-based configuration
-├── schema.sql               # MySQL schema + seed companies
+├── app.py                  # Routes, authentication, dashboard, APIs
+├── config.py               # Environment-based configuration
+├── schema.sql              # MySQL schema + seed companies
+├── feature_schema.sql      # Database migration for new features
+├── practice_schema.sql     # Practice module schema
+├── judge.py                # Python code execution & judging
 ├── requirements.txt
 ├── .env.example
 ├── templates/
-│   ├── base.html            # sidebar app shell
-│   ├── login.html / register.html
+│   ├── base.html
+│   ├── login.html
+│   ├── register.html
 │   ├── dashboard.html
 │   ├── company.html
 │   ├── add_problem.html
 │   └── notes.html
 └── static/
-    ├── css/style.css        # design system (dark, amber/teal accents)
+    ├── css/style.css
     └── js/
-        ├── charts.js         # dashboard charts + heatmap
+        ├── charts.js
         └── company_chart.js
-      
 ```
+
+---
+
 ## 📸 Screenshots
 
 | Dashboard | Practice |
@@ -106,89 +123,117 @@ PrepTrack/
 |--------|---------------|
 | ![Login](Screenshots/login-page.png) | ![Log Problem](Screenshots/Log-problem.png) |
 
+---
+
 ## 🌐 Live Demo
 
-🔗 **Website:** https://exquisite-friendship.up.railway.app
+🔗 **Website:** `https://exquisite-friendship.up.railway.app`
 
-### Demo Credentials (Optional)
-
-You can either:
+### Demo Access
 
 - Register a new account
 - Or log in using your own account
 
 > Hosted on Railway with MySQL and automatic GitHub deployments.
 
-## Setup
+---
 
-1. **Create the database**
+## 🚀 Setup
 
-   ```bash
-   mysql -u root -p < schema.sql
-   ```
+### 1. Create the database
 
-   If you already have an existing PrepTrack database from before, instead run the
-   two migration files to add the new tables/columns without losing your data:
+```bash
+mysql -u root -p < schema.sql
+```
 
-   ```bash
-   mysql -u root -p preptrack < feature_schema.sql
-   mysql -u root -p preptrack < practice_schema.sql
-   ```
+If you already have an existing PrepTrack database, run the migration files instead:
 
-2. **Install dependencies** (a virtualenv is recommended)
+```bash
+mysql -u root -p preptrack < feature_schema.sql
+mysql -u root -p preptrack < practice_schema.sql
+```
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate        # Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+### 2. Install dependencies
 
-3. **Configure environment variables** — copy `.env.example` to `.env` and
-   fill in your MySQL credentials, or export the same variables directly:
+```bash
+python -m venv venv
 
-   ```bash
-   cp .env.example .env
-   ```
+# Windows
+venv\Scripts\activate
 
-   If you use `python-dotenv`, add `from dotenv import load_dotenv; load_dotenv()`
-   near the top of `app.py`, or export the variables in your shell before running.
+# Linux/macOS
+source venv/bin/activate
 
-4. **Run the app**
+pip install -r requirements.txt
+```
 
-   ```bash
-   python app.py
-   ```
+### 3. Configure environment variables
 
-   Visit `http://127.0.0.1:5000`, register an account, and start logging problems.
+Copy `.env.example` to `.env`.
 
-## Notes on the design
+```bash
+cp .env.example .env
+```
 
-The UI leans into the subject matter — a commit-log / terminal aesthetic
-(dark canvas, monospace stat numbers, a GitHub-style streak heatmap) rather
-than a generic light dashboard, since the audience is students already
-comfortable in that visual language from LeetCode/GitHub. Amber marks the
-streak and "in-progress" state; teal marks completion and easy problems;
-rose marks hard problems — used consistently across charts, tags, and stats
-so the color coding is legible at a glance across every page.
+Fill in your MySQL credentials.
 
-## Practice / judge feature — how it works
+If using `python-dotenv`, add:
 
-- Problems live in `practice_problems` + `practice_test_cases` (stdin/stdout judged).
-- The in-browser editor (CodeMirror, bundled locally, no CDN) posts code to
-  `/api/practice/<id>/run` for a quick sanity check, or `/api/practice/<id>/submit`
-  to be graded against every test case for that problem.
-- `judge.py` runs submitted code as a plain Python subprocess with a 5-second
-  timeout. **This is not a real sandbox** — submitted code has the same
-  filesystem/network access as the Flask process. Fine for practicing on your
-  own machine; do **not** deploy this publicly or for multiple untrusted users
-  without adding real isolation (Docker per run, a restricted OS user,
-  seccomp/gVisor, or a hosted judge API like Judge0).
-- Add more problems by inserting rows into `practice_problems` and
-  `practice_test_cases` — see `practice_schema.sql` for the pattern.
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
 
-## Extending it further
+near the top of `app.py`.
 
-- Password reset + email verification (needs an SMTP/email provider — a genuinely separate integration)
-- More languages in the judge (currently Python only)
-- Admin/teacher role with a batch-wide leaderboard
-- PDF export alongside CSV
+### 4. Run the application
+
+```bash
+python app.py
+```
+
+Open:
+
+```text
+http://127.0.0.1:5000
+```
+
+Register an account and start tracking your coding preparation.
+
+---
+
+## 🎨 Design Philosophy
+
+PrepTrack uses a terminal-inspired UI with a dark theme, monospace statistics, and a GitHub-style contribution heatmap instead of a generic dashboard. Color coding remains consistent across the application:
+
+- 🟨 Amber — streaks and in-progress work
+- 🟩 Teal — completed work and easy problems
+- 🌹 Rose — hard problems
+
+This makes progress easy to understand at a glance.
+
+---
+
+## 💻 Practice & Judge
+
+- Problems are stored in `practice_problems` and `practice_test_cases`.
+- CodeMirror provides an in-browser coding experience without external CDNs.
+- `/api/practice/<id>/run` executes sample runs.
+- `/api/practice/<id>/submit` grades submissions against all test cases.
+- `judge.py` executes Python code with a **5-second timeout**.
+
+### Security Note
+
+The current implementation is intended for personal practice and is **not a production sandbox**. For multi-user deployments, use isolated execution such as Docker containers, gVisor, seccomp, or Judge0.
+
+---
+
+## 🚀 Future Improvements
+
+- Password reset
+- Email verification
+- Multi-language code execution
+- Admin/teacher dashboard
+- Batch-wise leaderboard
+- PDF export
+- Enhanced analytics
