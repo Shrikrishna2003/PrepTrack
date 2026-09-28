@@ -38,7 +38,15 @@ PrepTrack is a full-stack coding interview preparation platform built with Flask
 
 ## Tech stack
 
-Python · Flask · MySQL (PyMySQL) · Jinja2 · vanilla CSS/JS · Chart.js
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,flask,mysql,html,css,js,git,github,vscode"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Jinja2-Template_Engine-red?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Chart.js-Analytics-FF6384?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Railway-Deployed-purple?style=flat-square"/>
+</p>
 
 ## Project structure
 
