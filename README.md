@@ -17,9 +17,7 @@
   <b>Full-Stack Coding Interview Preparation Platform</b><br>
   Track coding progress, build streaks, practice interview problems, and analyze preparation with an interactive dashboard.
 </p>
-A coding-interview preparation tracker built with Flask + MySQL. Log solved
-problems, track company-wise prep (TCS / Infosys / Atidan), keep a daily
-streak, and review progress with Chart.js.
+PrepTrack is a full-stack coding interview preparation platform built with Flask and MySQL that helps students track coding progress, maintain streaks, practice interview problems, and visualize preparation through an interactive analytics dashboard.
 
 ## Features
 
