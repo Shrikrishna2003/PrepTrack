@@ -48,6 +48,23 @@ PrepTrack is a full-stack coding interview preparation platform built with Flask
   <img src="https://img.shields.io/badge/Railway-Deployed-purple?style=flat-square"/>
 </p>
 
+## 🏗 Architecture
+
+```text
+Browser
+   │
+   ▼
+Flask (Gunicorn)
+   │
+   ├── Authentication
+   ├── Dashboard
+   ├── Notes
+   ├── Practice Judge
+   └── Analytics API
+   │
+   ▼
+Railway MySQL
+```
 ## Project structure
 
 ```
