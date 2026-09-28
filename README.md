@@ -1,5 +1,22 @@
-# PrepTrack
+# 🚀 PrepTrack
 
+<p align="center">
+  <a href="https://exquisite-friendship.up.railway.app">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-00C853?style=for-the-badge&logo=railway&logoColor=white"/>
+  </a>
+
+  <a href="https://github.com/Shrikrishna2003/PrepTrack">
+    <img src="https://img.shields.io/badge/📂_GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+
+  <img src="https://img.shields.io/badge/Python-Flask-blue?style=for-the-badge&logo=python"/>
+  <img src="https://img.shields.io/badge/Database-MySQL-orange?style=for-the-badge&logo=mysql"/>
+</p>
+
+<p align="center">
+  <b>Full-Stack Coding Interview Preparation Platform</b><br>
+  Track coding progress, build streaks, practice interview problems, and analyze preparation with an interactive dashboard.
+</p>
 A coding-interview preparation tracker built with Flask + MySQL. Log solved
 problems, track company-wise prep (TCS / Infosys / Atidan), keep a daily
 streak, and review progress with Chart.js.
