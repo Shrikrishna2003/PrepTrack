@@ -22,10 +22,6 @@ from config import Config
 from judge import run_code, judge_submission
 
 app = Flask(__name__)
-@app.route("/health")
-def health():
-    return {"status": "ok"}, 200
-app.config.from_object(Config)
 
 # ---------------------------------------------------------------------------
 # Logging setup — prints to the terminal AND writes to preptrack.log
@@ -825,8 +821,8 @@ def api_practice_submit(problem_id):
     verdict["problem_difficulty"] = problem["difficulty"]
     return jsonify(verdict)
 
-@app.route("/health")
-def health():
+@app.route("/health", endpoint="health_check")
+def health_check():
     return "OK", 200
 
 if __name__ == "__main__":
