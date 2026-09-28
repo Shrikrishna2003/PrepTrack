@@ -1,11 +1,6 @@
 import os
-from pymysql import connections
-from pymysql import connections
-from pymysql import connections
-from pymysql import connections
-from pymysql import connections
-from pymysql import connections
-from pymysql import connections
+import pymysql
+import pymysql.cursors
 import datetime
 import logging
 from logging.handlers import RotatingFileHandler
@@ -22,7 +17,7 @@ from config import Config
 from judge import run_code, judge_submission
 
 app = Flask(__name__)
-
+app.config.from_object(Config)
 # ---------------------------------------------------------------------------
 # Logging setup — prints to the terminal AND writes to preptrack.log
 # ---------------------------------------------------------------------------
