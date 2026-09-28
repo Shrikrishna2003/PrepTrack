@@ -83,6 +83,19 @@ PrepTrack/
 |--------|---------------|
 | ![Login](Screenshots/login-page.png) | ![Log Problem](Screenshots/Log-problem.png) |
 
+## 🌐 Live Demo
+
+🔗 **Website:** https://exquisite-friendship.up.railway.app
+
+### Demo Credentials (Optional)
+
+You can either:
+
+- Register a new account
+- Or log in using your own account
+
+> Hosted on Railway with MySQL and automatic GitHub deployments.
+
 ## Setup
 
 1. **Create the database**
